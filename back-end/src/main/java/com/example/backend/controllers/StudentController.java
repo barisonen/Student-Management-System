@@ -28,13 +28,11 @@ public class StudentController {
 
     //Creates, saves, and returns dummy list of students for user to easily work on.
     @GetMapping("createDummyList")
-    public List<Student> createDummyList() {
+    public void createDummyList() {
         Student s1 = new Student("Baris", "Onen", "+1 234 567 89 00", "Ankara", "Cankaya", "Hardworking Student");
         Student s2 = new Student("Burhan", "Altintop", "+90 234 567 89 00", "Istanbul", "Nisantasi", "Economics Student");
         studentRepository.save(s1);
         studentRepository.save(s2);
-
-        return iterableToList(studentRepository.findAll());
     }
 
     @GetMapping("getStudentList")
@@ -93,6 +91,12 @@ public class StudentController {
         else {
             return HttpStatus.BAD_REQUEST;
         }
+    }
+
+    @DeleteMapping("removeAll")
+    public HttpStatus removeAll() {
+        studentRepository.deleteAll();
+        return HttpStatus.OK;
     }
 
     private List<Student> iterableToList(Iterable<Student> iterable) {
