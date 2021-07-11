@@ -8,18 +8,19 @@ const StudentItem = props => {
             <div className="box">
                 <div className="media-content">
                     <b style={{ textTransform: "capitalize" }}>
-                        {student.name}{" "}
+                        {student.name}{" "}{student.surname}
                     </b>
-                </div>
-                <div className="media">
-                    <div className="media-left">
-                        <figure className="image is-64x64">
-                            <img
-                                src={`data:image/png;base64,${student.image}`}
-                                alt={student.description}
-                            />
-                        </figure>
-                    </div>
+                    <br/>
+                    <b>Phone: </b> {student.phoneNumber}
+                    <br/>
+                    <b>City: </b> {student.city}
+                    <br/>
+                    <b>District: </b> {student.district}
+                    <br/>
+                    <b>Description: </b> {student.description}
+                    <br/>
+                    <br/>
+
                 </div>
             </div>
         </div>

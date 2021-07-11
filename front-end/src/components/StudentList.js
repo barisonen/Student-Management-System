@@ -7,7 +7,7 @@ const StudentList = props => {
 
     return (
         <>
-            <div className="studenListDiv">
+            <div className="studentListDiv">
                 <h4 className="title">Students</h4>
             </div>
             <div className="container">

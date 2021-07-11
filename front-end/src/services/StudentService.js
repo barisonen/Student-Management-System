@@ -5,11 +5,12 @@ export default class StudentService {
         return axios.get('http://localhost:8080/students/getStudentList');
     }
 
-    createDummyList() {
-        return axios.get('http://localhost:8080/students/createDummyList');
+    async createDummyList() {
+        await axios.get('http://localhost:8080/students/createDummyList');
     }
 
-    removeAll() {
-        return axios.delete('http://localhost:8080/students/removeAll');
+    async removeAll() {
+        await axios.delete('http://localhost:8080/students/removeAll');
     }
+
 }

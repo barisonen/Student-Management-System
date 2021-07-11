@@ -23,16 +23,23 @@ export default class App extends Component {
         this.setState( { students: students.data } );
     }
 
-    removeAll() {
-        this.studentService.removeAll().then();
-        this.setState( {
-            products: this.studentService.getStudentList()
-        });
+    async removeAll() {
+        await this.studentService.removeAll();
+        await this.studentService.getStudentList().then(res=> {
+            this.setState( {
+                students: res.data
+            });
+        })
+
     }
 
-    createDummyList() {
-        this.studentService.createDummyList().then();
-        this.setState(this.state);
+    async createDummyList() {
+        await this.studentService.createDummyList();
+        await this.studentService.getStudentList().then(res => {
+            this.setState( {
+                students: res.data
+            });
+        });
     }
 
     render() {

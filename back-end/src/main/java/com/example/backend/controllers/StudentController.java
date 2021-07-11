@@ -18,7 +18,7 @@ public class StudentController {
 
     private final StudentRepository studentRepository;
 
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     public StudentController(StudentRepository studentRepository, ObjectMapper objectMapper) {
         this.studentRepository = studentRepository;
