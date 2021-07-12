@@ -7,17 +7,23 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+/*
+City - District Repository for mapping city and districts
+ */
 @Repository
 public class CityDistrictRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /*
+    Get Districts for a given city
+     */
     public List<String> getDistricts(String city) {
 
         String sql = "SELECT DISTRICT FROM CITY_DISTRICT WHERE CITY = '" + city + "'";
         List<Map<String, Object>> result = jdbcTemplate.queryForList(sql);
+        //if no such city exists in the database, return null
         if(result.size() ==  0) {
             return null;
         }
@@ -25,10 +31,12 @@ public class CityDistrictRepository {
         for(Map<String, Object> map : result) {
             districts.add((String) map.get("DISTRICT"));
         }
-        System.out.println(districts);
         return districts;
     }
 
+    /*
+    Get all cities in the database
+     */
     public List<String> getCities() {
         String sql = "SELECT DISTINCT CITY FROM CITY_DISTRICT";
         List<Map<String, Object>> result = jdbcTemplate.queryForList(sql);
@@ -39,7 +47,17 @@ public class CityDistrictRepository {
         for(Map<String, Object> map : result) {
             districts.add((String) map.get("CITY"));
         }
-        System.out.println(districts);
         return districts;
+    }
+    /*
+    Loads dummy city-districts to database
+     */
+    public void loadCityAndDistricts() {
+        jdbcTemplate.queryForList("DELETE FROM CITY_DISTRICT");
+        jdbcTemplate.queryForList("INSERT INTO CITY_DISTRICT " +
+                "VALUES('ANKARA', 'CANKAYA'), " +
+                "('ANKARA', 'YENIMAHALLE'), " +
+                "('ISTANBUL', 'NISANTASI'), " +
+                "('ISTANBUL', 'CIHANGIR') ");
     }
 }

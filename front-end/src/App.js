@@ -4,9 +4,13 @@ import StudentList from './components/StudentList'
 import './App.css';
 import StudentService from './services/StudentService';
 import Context from './Context'
-import { Country, State, City }  from 'country-state-city';
 import AddStudentPopup from './components/AddStudentPopup'
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import CityDistrictService from './services/CityDistrictService';
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+import 'primeflex/primeflex.css';
+import { Button } from 'primereact/button'
 
 export default class App extends Component {
     constructor(props) {
@@ -19,28 +23,26 @@ export default class App extends Component {
         this.studentService = new StudentService();
         this.createDummyList = this.createDummyList.bind(this);
         this.removeAll = this.removeAll.bind(this);
+        this.cityDistrictService = new CityDistrictService();
     }
 
     async componentDidMount() {
         const students = await this.studentService.getStudentList();
-
         this.setState( { students: students.data } );
 
+        await this.cityDistrictService.loadCityAndDistricts();
 
-        Country.getAllCountries().map((country) => {
-            if(country.name === "Turkey") {
-                console.log(country)
-            }
-        })
-        State.getAllStates().map((state) => {
-            if(state.countryCode === "TR") {
-                console.log(state)
-            }
-        })
     }
 
     togglePopup = () => {
         this.setState({showPopup: !this.state.showPopup});
+    }
+
+    stateRefresher = () => {
+        const sameStudents = this.state.students;
+        const sameShowPopup = this.state.showPopup;
+        this.setState({students : sameStudents, showPopup : sameShowPopup})
+        this.forceUpdate()
     }
 
 
@@ -72,24 +74,14 @@ export default class App extends Component {
                     }}
                 >
                     <Router ref={this.routerRef}>
-                        <nav className="navbar container"
-                             role="navigation"
-                             aria-label="main-navigation"
-                        >
-                            <div className="navbar-menu">
-                                <Link to="/students" className="navbar-item">
-                                    Students
-                                </Link>
-                            </div>
-                        </nav>
-                        <button className="button" onClick={this.createDummyList}>
+                        <Button className="button" onClick={this.createDummyList}>
                             Create Dummy List
-                        </button>
-                        <button className="button" onClick={this.removeAll}>
+                        </Button>
+                        <Button className="button" onClick={this.removeAll}>
                             Remove All
-                        </button>
-                        <button className="button" onClick={this.togglePopup}>Add Student</button>
-                        {this.state.showPopup ? <AddStudentPopup toggle={this.togglePopup} /> : null}
+                        </Button>
+                        <Button className="button" onClick={this.togglePopup}>Add Student</Button>
+                        {this.state.showPopup ? <AddStudentPopup toggle={this.togglePopup} stateRefresher={this.stateRefresher}/> : null}
                         <Switch>
                             <Route exact path="/" component={StudentList} />
                             <Route exact path="/students" component={StudentList} />

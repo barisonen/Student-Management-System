@@ -23,6 +23,7 @@ public class StudentController {
     public StudentController(StudentRepository studentRepository, ObjectMapper objectMapper) {
         this.studentRepository = studentRepository;
         this.objectMapper = objectMapper;
+
     }
 
 

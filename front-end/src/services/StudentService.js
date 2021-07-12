@@ -13,4 +13,8 @@ export default class StudentService {
         await axios.delete('http://localhost:8080/students/removeAll');
     }
 
+    addStudent(student) {
+        console.log(student);
+        axios.post('http://localhost:8080/students/addStudent', student);
+    }
 }

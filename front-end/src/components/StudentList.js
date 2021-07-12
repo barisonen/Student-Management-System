@@ -1,6 +1,8 @@
 import React from "react";
 import StudentItem from "./StudentItem"
 import withContext from "../withContext"
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 
 const StudentList = props => {
     const { students } = props.context;
@@ -11,20 +13,14 @@ const StudentList = props => {
                 <h4 className="title">Students</h4>
             </div>
             <div className="container">
-                {students && students.length ? (
-                    students.map((student, index) => (
-                        <StudentItem
-                            student={student}
-                        />
-                    ))
-                ) : (
-                        <div className="column">
-                            <span className="title has-text-grey-light">
-                                There are no students
-                            </span>
-                        </div>
-                    )
-                }
+                <DataTable value={students}>
+                    <Column field='name' header='Name' />
+                    <Column field='surname' header='Surname' />
+                    <Column field='phoneNumber' header='Phone Number' />
+                    <Column field='city' header='City' />
+                    <Column field='district' header='District' />
+                    <Column field='description' header='Description' />
+                </DataTable>
             </div>
         </>
     );

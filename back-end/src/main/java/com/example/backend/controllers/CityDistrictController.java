@@ -1,6 +1,7 @@
 package com.example.backend.controllers;
 
 import com.example.backend.repositories.CityDistrictRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,13 +16,19 @@ public class CityDistrictController {
         this.cityDistrictRepository = cityDistrictRepository;
     }
 
-    @GetMapping("/getDistricts")
+    @PostMapping("/getDistricts")
     public List<String> getDistricts(@RequestBody String city) {
+        city = city.substring(0, city.length()-1);
         return cityDistrictRepository.getDistricts(city);
     }
 
     @GetMapping("/getCities")
     public List<String> getCities() {
         return cityDistrictRepository.getCities();
+    }
+
+    @GetMapping("loadCityAndDistricts")
+    public void loadCityAndDistricts() {
+        cityDistrictRepository.loadCityAndDistricts();
     }
 }
