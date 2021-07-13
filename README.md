@@ -19,6 +19,33 @@ On the pop-up set url to jdbc:hsqldb:hsql://localhost/testdb
 <br/>
   <br/>
 Now you can query existing data in the database
+<br/>
+  Please run below queries:
+create table STUDENT
+(
+    ID           BIGINT not null
+        primary key,
+    CITY         VARCHAR(255),
+    DESCRIPTION  VARCHAR(255),
+    DISTRICT     VARCHAR(255),
+    NAME         VARCHAR(255),
+    PHONE_NUMBER VARCHAR(255),
+    SURNAME      VARCHAR(255),
+    FILE  	VARCHAR(2000)
+);
+ 
+  <br/>
+  
+create table CITY_DISTRICT
+(
+CITY VARCHAR(200),
+DISTRICT VARCHAR(200)
+);
+  
+  <br/>
+  
+ 
+
 
 <br/>
 <br/>
