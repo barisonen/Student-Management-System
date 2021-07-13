@@ -4,9 +4,11 @@ import com.example.backend.entities.Student;
 import com.example.backend.repositories.StudentRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.HttpRequest;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +32,8 @@ public class StudentController {
     //Creates, saves, and returns dummy list of students for user to easily work on.
     @GetMapping("createDummyList")
     public void createDummyList() {
-        Student s1 = new Student("Baris", "Onen", "+1 234 567 89 00", "Ankara", "Cankaya", "Hardworking Student");
-        Student s2 = new Student("Burhan", "Altintop", "+90 234 567 89 00", "Istanbul", "Nisantasi", "Economics Student");
+        Student s1 = new Student("Baris", "Onen", "(222) 333 1111", "Ankara", "Cankaya", "Hardworking Student", null);
+        Student s2 = new Student("Burhan", "Altintop", "(123) 456 7890", "Istanbul", "Nisantasi", "Economics Student", null);
         studentRepository.save(s1);
         studentRepository.save(s2);
     }
@@ -42,21 +44,24 @@ public class StudentController {
     }
 
     @PostMapping("addStudent")
-    public HttpStatus addStudent(@RequestBody String st) {
-        Student newStudent = new Student();
+    public HttpStatus addStudent(@RequestBody String student) {
+        Student newStudent = null;
+
         try {
-            newStudent = objectMapper.readValue(st, Student.class);
+            newStudent = objectMapper.readValue(student, Student.class);
         } catch(JsonProcessingException e) {
             return HttpStatus.BAD_REQUEST;
         }
         studentRepository.save(newStudent);
         return HttpStatus.OK;
+
     }
 
-    @DeleteMapping("removeStudent")
+    @PostMapping("removeStudent")
     public HttpStatus removeStudent(@RequestBody String sId) {
         Long id = null;
         try {
+            sId = sId.replace("=","");
             id = Long.parseLong(sId);
         } catch(NumberFormatException e) {
             return HttpStatus.NOT_ACCEPTABLE;
@@ -71,10 +76,10 @@ public class StudentController {
     }
 
     @PatchMapping("updateStudent")
-    public HttpStatus updateStudent(@RequestBody String st) {
+    public HttpStatus updateStudent(@RequestBody String student) {
         Student theStudent = new Student();
         try {
-            theStudent = objectMapper.readValue(st, Student.class);
+            theStudent = objectMapper.readValue(student, Student.class);
         } catch(JsonProcessingException e) {
             return HttpStatus.BAD_REQUEST;
         }
@@ -83,6 +88,7 @@ public class StudentController {
         if(existingStudent != null) {
             existingStudent.setName(theStudent.getName());
             existingStudent.setSurname(theStudent.getSurname());
+            existingStudent.setPhoneNumber(theStudent.getPhoneNumber());
             existingStudent.setCity(theStudent.getCity());
             existingStudent.setDistrict(theStudent.getDistrict());
             existingStudent.setDescription(theStudent.getDescription());
@@ -96,7 +102,11 @@ public class StudentController {
 
     @DeleteMapping("removeAll")
     public HttpStatus removeAll() {
-        studentRepository.deleteAll();
+        try {
+            studentRepository.deleteAll();
+        } catch(Exception e) {
+            return HttpStatus.INTERNAL_SERVER_ERROR;
+        }
         return HttpStatus.OK;
     }
 

@@ -1,6 +1,7 @@
 package com.example.backend.entities;
 
 import javax.persistence.*;
+import java.io.File;
 
 @Entity
 @Table(name = "student")
@@ -16,14 +17,16 @@ public class Student {
     private String city;
     private String district;
     private String description;
+    private String file;
 
-    public Student(String name, String surname, String phoneNumber, String city, String district, String description) {
+    public Student(String name, String surname, String phoneNumber, String city, String district, String description, String file) {
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
         this.city = city;
         this.district = district;
         this.description = description;
+        this.file = file;
     }
 
     public Student() {}
@@ -79,4 +82,9 @@ public class Student {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String toString() {
+        return name + " " + surname + " " + phoneNumber + " " + city + " " + district + " " + description;
+    }
+
 }

@@ -20,8 +20,10 @@ public class CityDistrictRepository {
     Get Districts for a given city
      */
     public List<String> getDistricts(String city) {
+        if(city == null)
+            return null;
 
-        String sql = "SELECT DISTRICT FROM CITY_DISTRICT WHERE CITY = '" + city + "'";
+        String sql = "SELECT DISTRICT FROM CITY_DISTRICT WHERE lower(CITY) = '" + city.toLowerCase() + "'";
         List<Map<String, Object>> result = jdbcTemplate.queryForList(sql);
         //if no such city exists in the database, return null
         if(result.size() ==  0) {
@@ -53,6 +55,7 @@ public class CityDistrictRepository {
     Loads dummy city-districts to database
      */
     public void loadCityAndDistricts() {
+        //clear first to avoid duplicated rows since primary key is not set (for now)
         jdbcTemplate.queryForList("DELETE FROM CITY_DISTRICT");
         jdbcTemplate.queryForList("INSERT INTO CITY_DISTRICT " +
                 "VALUES('ANKARA', 'CANKAYA'), " +
