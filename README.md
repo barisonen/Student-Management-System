@@ -20,7 +20,7 @@ On the pop-up set url to jdbc:hsqldb:hsql://localhost/testdb
   <br/>
 Now you can query existing data in the database
 <br/>
-  Please run below queries:
+  Please run below queries:<br/>
 create table STUDENT
 (
     ID           BIGINT not null
