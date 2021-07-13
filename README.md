@@ -49,10 +49,10 @@ DISTRICT VARCHAR(200)
 
 <br/>
 <br/>
-For back-end, run BackEndApplication.java
+For back-end, run command: "mvn clean install" then run BackEndApplication.java
 <br>
   <br/>
-For front-end, execute "npm start" in command line
+For front-end, run commands "npm install" and "npm start"
 <br/>
  <br/>
  After these steps, please go to localhost:3000
