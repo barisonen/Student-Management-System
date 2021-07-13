@@ -19,13 +19,40 @@ On the pop-up set url to jdbc:hsqldb:hsql://localhost/testdb
 <br/>
   <br/>
 Now you can query existing data in the database
+<br/>
+  Please run below queries:<br/>
+create table STUDENT
+(
+    ID           BIGINT not null
+        primary key,
+    CITY         VARCHAR(255),
+    DESCRIPTION  VARCHAR(255),
+    DISTRICT     VARCHAR(255),
+    NAME         VARCHAR(255),
+    PHONE_NUMBER VARCHAR(255),
+    SURNAME      VARCHAR(255),
+    FILE  	VARCHAR(2000)
+);
+ 
+  <br/>
+  
+create table CITY_DISTRICT
+(
+CITY VARCHAR(200),
+DISTRICT VARCHAR(200)
+);
+  
+  <br/>
+  
+ 
+
 
 <br/>
 <br/>
-For back-end, run BackEndApplication.java
+For back-end, run command: "mvn clean install" then run BackEndApplication.java
 <br>
   <br/>
-For front-end, execute "npm start" in command line
+For front-end, run commands "npm install" and "npm start"
 <br/>
  <br/>
  After these steps, please go to localhost:3000
